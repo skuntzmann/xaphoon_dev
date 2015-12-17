@@ -35,10 +35,10 @@ onRun: {
             cursor.staff = 0;                                     // Propriété "staff" du curseur : définit la portée 1
             cursor.voice = 0;                                     // Propriété "voice" du curseur : définit la voix 1 de cette portée
             cursor.rewind(0);                                     // Place le curseur au premier accord/silence
-      FontLoader {                                                 // charge la police
-            id: font;                                             // Donne un id
-            source: "qrc:/fonts/xaphoontab.ttf"                    // indique le chemin vers la police
-                  }                     
+      FontLoader {                                              // charge la police
+            id: font;                                              // Donne un id
+            source: "/fonts/xaphoontab.ttf"                    // indique le chemin vers la police
+                  }                    
       
       while (!cursor.segment) {                                   // Boucle : si le curseur n'est pas à la fin, continuer la boucle
             if (cursor.isChord()) {                               // Si le curseur est sur un accord ou une note, alors fait ce qui suit
