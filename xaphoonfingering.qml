@@ -114,9 +114,7 @@ MuseScore {
     } // end applyToSelection()
 
     function apply() {
-        curScore.startCmd()
         applyToSelection(tabNotes)
-        curScore.endCmd()
     }
 
 }
