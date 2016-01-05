@@ -21,17 +21,24 @@ MuseScore {
     description: qsTr("This plugin displays fingerings for xaphoon")
     menuPath: "Plugins.Notes." + qsTr("Xaphoon fingering")
 
-    property variant fingerings : [ "z", "Z", "x", "X", "c", "v", "V", "b", "B", "n", "N", "m",
-    "a", "A", "s", "S", "d", "f", "F", "g", "G", "h", "H", "j",
-     "q", "Q", "w"];
+
+    property variant fingerings : [ "z", "Z", "x", "X", "c", "v", "V", "b", "B", "n", "N", "m", 
+"a", "A", "s", "S", "d", "f", "F", "g", "G", "h", "H", "j",
+ "q", "Q", "w"] 
 
 
-    FontLoader {                                              // charge la police
-        id: font;                                              // Donne un id
-        source: "http://boissirand.net76.net/xaphoontab.ttf"        // indique le chemin vers la police
-    }
+//-----------------------------------------------------------------------------
+// Define fingerings font
+//-----------------------------------------------------------------------------
+//    FontLoader {                                              
+//        id: font;                                              
+//        source: "http://boissirand.net76.net/xaphoontab.ttf"        
+//    }
 
-  function applyToNotesInSelection(func) {
+//-----------------------------------------------------------------------------
+// Define function for selecting notes
+//-----------------------------------------------------------------------------
+      function applyToNotesInSelection(func) {
             var cursor = curScore.newCursor();
             cursor.rewind(1);
             var startStaff;
@@ -86,24 +93,49 @@ MuseScore {
                   }
             }
       }
-   
 
-    function tabNotes(notes, text) {
-        var pitch = notes[0].pitch;     // Déclare la variable pitch = hauteur de la note supérieure de l'accord
-        var index = pitch - 65;                         // Déclare la variable index = var pitch - 65 (?)
-        if(index >= 0 && index < fingerings.length){
-            text.text = fingerings[index];              // Définit le texte à afficher :
-            font.family = font.name
-            text.yOffset = 6;
-        }
-    }
+
+
+//-----------------------------------------------------------------------------
+// Define function for applying fingerings to notes
+//-----------------------------------------------------------------------------
+function fingerNotes(note, text)  {
+      if (typeof curScore === 'undefined')	
+            return;
+      var cursor = curScore.newCursor();
+      cursor.staff = 0;
+      cursor.voice = 0;
+      cursor.rewind(1);
+      //var font = new QFont("recorder", 15);
+      while (!cursor.eos) {
+            if (cursor.isChord()) {
+                  
+                  var pitch = cursor.chord().topNote().pitch;
+                  var index = pitch - 65;
+                  if(index >= 0 && index < fingerings.length){ 
+                      var text  = new Text(curScore);
+                      text.text = fingerings[index];
+                     // text.defaultFont = font;
+                      text.yOffset = 6;
+                      cursor.putStaffText(text);
+                      }
+                  }
+              cursor.next();
+            }
+     }
+  
+  
+//-----------------------------------------------------------------------------
+// Run the plugin
+//-----------------------------------------------------------------------------
  onRun: {
-       function apply() {
-        applyToNotesInSelection(tabNotes)
-    }
+        console.log("hello fingerings for xaphoon");
+
+            if (typeof curScore === 'undefined')
+                  Qt.quit();
+
+            applyToNotesInSelection(fingerNotes)
         Qt.quit();
     }
-    
-
 }
 
