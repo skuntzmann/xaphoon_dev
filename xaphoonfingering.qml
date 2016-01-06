@@ -30,12 +30,14 @@ MuseScore {
         Qt.quit();
     }
 
-    function tabNotes(notes, text) {
-        var pitch = notes[0].pitch;     // Déclare la variable pitch = hauteur de la note supérieure de l'accord
-        var index = pitch - 60;                         // Déclare la variable index = var pitch - 65 (?)
+    function tabNotes(notes, cursor) {
+        var pitch = notes[0].pitch;  // pitch of the chord top note
+        var index = pitch - 60;      //  index =  pitch - 60 (60 is the midi pitch of C, 0 index in fingerings)
         if(index >= 0 && index < fingerings.length){
-            text.text = '<font face="XaphoonTab"/>' + '<font size="40"/>' + fingerings[index];              // Définit le texte à afficher :
+            var text = newElement(Element.STAFF_TEXT);
+            text.text = '<font face="XaphoonTab"/>' + '<font size="40"/>' + fingerings[index];
             text.userOff.y = 10;
+            cursor.add(text);
         }
     }
 
@@ -76,27 +78,16 @@ MuseScore {
 
                 if (fullScore)  // no selection
                     cursor.rewind(0); // beginning of score
-
                     while (cursor.segment && (fullScore || cursor.tick < endTick)) {
                         if (cursor.element && cursor.element.type == Element.CHORD) {
-                            var text = newElement(Element.STAFF_TEXT);
-
                             var graceChords = cursor.element.graceNotes;
                             for (var i = 0; i < graceChords.length; i++) {
                                 // iterate through all grace chords
                                 var notes = graceChords[i].notes;
-                                func(notes, text);
-                                cursor.add(text);
-                                // new text for next element
-                                text  = newElement(Element.STAFF_TEXT);
+                                func(notes, cursor);
                             }
-
                             var notes = cursor.element.notes;
-                            func(notes, text);
-
-                            if ((voice == 0) && (notes[0].pitch > 83))
-                                text.pos.x = 1;
-                            cursor.add(text);
+                            func(notes, cursor);
                         } // end if CHORD
                         cursor.next();
                     } // end while segment
