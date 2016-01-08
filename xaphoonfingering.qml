@@ -6,6 +6,7 @@
 //
 //  Copyright (C)2010 Nicolas Froment (lasconic)
 //  Copyright (C)2015 Sylvain Kuntzmann (skunt)
+//  Copyright (C)2015 Hervé Laurent (AirW)
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License version 2
@@ -17,7 +18,7 @@ import QtQuick 2.0
 import MuseScore 1.0
 
 MuseScore {
-    version: "2.0"
+    version: "1.0"
     description: qsTr("This plugin displays fingering for xaphoon")
     menuPath: "Plugins.Notes." + qsTr("Xaphoon fingering")
 
@@ -36,7 +37,8 @@ MuseScore {
         if(index >= 0 && index < fingerings.length){
             var text = newElement(Element.STAFF_TEXT);
             text.text = '<font face="XaphoonTab"/>' + '<font size="40"/>' + fingerings[index];
-            text.userOff.y = 10;
+            text.userOff.y = -7,5;
+            text.userOff.x = -1,1;
             cursor.add(text);
         }
     }
