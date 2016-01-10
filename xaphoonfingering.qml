@@ -2,7 +2,7 @@
 //  MuseScore
 //  Music Composition & Notation
 //
-//  Xaphoon fingering plugin
+//  XaphoonTab Plugin
 //
 //  Copyright (C)2010 Nicolas Froment (lasconic)
 //  Copyright (C)2015 Sylvain Kuntzmann (skunt)
@@ -19,8 +19,8 @@ import MuseScore 1.0
 
 MuseScore {
     version: "1.0"
-    description: qsTr("This plugin displays fingering for xaphoon")
-    menuPath: "Plugins.Notes." + qsTr("Xaphoon fingering")
+    description: qsTr("This plugin displays fingering for xaphoon in C")
+    menuPath: "Plugins.Notes." + qsTr("XaphoonTab")
 
     property variant fingerings : [ "z", "Z", "x", "X", "c", "v", "V", "b", "B", "n", "N", "m",
     "a", "A", "s", "S", "d", "f", "F", "g", "G", "h", "H", "j",
