@@ -5,8 +5,8 @@
 //  XaphoonTab Plugin
 //
 //  Copyright (C)2010 Nicolas Froment (lasconic)
-//  Copyright (C)2015 Sylvain Kuntzmann (skunt)
 //  Copyright (C)2015 Hervé Laurent (AirW)
+//  Copyright (C)2019 Sylvain Kuntzmann (skunt)
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License version 2
@@ -14,13 +14,13 @@
 //  the file LICENCE.GPL
 //=============================================================================
 
-import QtQuick 2.0
-import MuseScore 1.0
+import QtQuick 2.9
+import MuseScore 3.0
 
 MuseScore {
-    version: "1.0"
-    description: qsTr("This plugin displays fingering for xaphoon in C")
-    menuPath: "Plugins.Notes." + qsTr("XaphoonTab")
+    version: "3.0"
+    description: "This plugin displays fingering for xaphoon in C"
+    menuPath: "Plugins.XaphoonTab Fingering"
 
     property variant fingerings : [ "z", "Z", "x", "X", "c", "v", "V", "b", "B", "n", "N", "m",
     "a", "A", "s", "S", "d", "f", "F", "g", "G", "h", "H", "j",
@@ -37,8 +37,8 @@ MuseScore {
         if(index >= 0 && index < fingerings.length){
             var text = newElement(Element.STAFF_TEXT);
             text.text = '<font face="XaphoonTab"/>' + '<font size="40"/>' + fingerings[index];
-            text.userOff.y = -7,5;
-            text.userOff.x = -1,1;
+//            text.offsetY = -7,5; //not used : automatic placement
+//            text.offsetX = -1,1; //not used : automatic placement
             cursor.add(text);
         }
     }
